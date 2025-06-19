@@ -51,7 +51,21 @@ class AvoidanceEnv(gym.Env):
         self.pose = msg.position  # On simplifiera pour l’instant
 
     
-    def reset(self):
+    def reset(self, *, seed: int | None = None, options: dict | None = None):
+        """Reset the environment.
+
+        Parameters
+        ----------
+        seed : Optional[int]
+            Seed for the environment RNG. It is ignored as the simulation
+            handles its own randomness but is accepted for compatibility with
+            the Gymnasium API.
+        options : Optional[dict]
+            Additional options, unused but kept for API compatibility.
+        """
+
+        super().reset(seed=seed)
+
         # Reset de la simulation manuellement (CoppeliaSim bouton Reset)
 
         # Attente active jusqu'à avoir un scan valide
@@ -63,7 +77,8 @@ class AvoidanceEnv(gym.Env):
         self.cmd_pub.publish(stop_msg)
 
         obs = np.clip(self.scan, 0.0, 10.0)  # nettoyage des valeurs aberrantes
-        return obs
+        info = {}
+        return obs, info
 
     def step(self, action):
         # 1. Extraire vitesse linéaire et angulaire
@@ -89,12 +104,13 @@ class AvoidanceEnv(gym.Env):
         # 6. Calculer le reward
         if self.collision:
             reward = -10.0
-            done = True
+            terminated = True
         else:
             reward = +1.0
-            done = False
+            terminated = False
+        truncated = False
 
         # 7. Optionnel : info log/debug
         info = {}
 
-        return obs, reward, done, info
+        return obs, reward, terminated, truncated, info
