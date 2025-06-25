@@ -1,0 +1,32 @@
+# Fichiers Python temporaires
+__pycache__/
+*.pyc
+*.pyo
+
+# Environnements virtuels
+env/
+venv/
+.venv/
+
+# ROS 2 log & build
+log/
+build/
+install/
+
+# CoppeliaSim auto files
+*.ttt.autosave
+
+# Fichiers système
+.DS_Store
+Thumbs.db
+
+# Fichiers temporaires VSCode / PyCharm
+.vscode/
+.idea/
+
+# TensorBoard
+*/ppo_lidar_tensorboard/*
+!ppo_lidar_tensorboard/.gitkeep
+
+# Modèles lourds
+models/*.zip
