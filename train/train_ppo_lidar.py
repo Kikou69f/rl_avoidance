@@ -67,7 +67,7 @@ def main() -> None:
                 learning_rate=1e-4,
                 clip_range=0.1,
                 n_steps=2048,
-                n_epochs=5,
+                n_epochs=15,
                 ent_coef=0.02,
                 tensorboard_log=tb_log,
                 device="auto"
@@ -81,7 +81,7 @@ def main() -> None:
             learning_rate=1e-4,
             clip_range=0.1,
             n_steps=2048,
-            n_epochs=5,
+            n_epochs=15,
             ent_coef=0.02,
             tensorboard_log=tb_log,
             device="auto"
